@@ -1,5 +1,5 @@
-from model import connection
+from model import cliente_model
 
-conexion = connection.Conection()
+cliente1 = cliente_model.ClienteModel()
 
-print(conexion.conn)
+cliente1.agregando_persona("jeferson","", "Alvarez", "", "1120558047", "3218726693", "mymo@gmail.com", "Calle 123 # 45-67, Bogotá, Colombia", "15/08/1990", "FEMENINO")

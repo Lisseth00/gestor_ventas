@@ -1,0 +1,1 @@
+solucioner el ingreso del dato de la fecha a una fecha que permita el sql
