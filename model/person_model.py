@@ -1,11 +1,11 @@
 from binascii import Error
 from model import connection
 
-class ClienteModel(connection.Conection):
+class PersonModel(connection.Conection):
     def __init__(self):
         super().__init__()
     
-    def agregando_persona(self, datos):
+    def agregar_persona(self, datos):
         try:
             query = """
             INSERT INTO personas (
@@ -41,24 +41,9 @@ class ClienteModel(connection.Conection):
             print(f"Error al obtener personas: {err}")
             return None
 
-    def actulizar_persona(self, id_persona, nuevos_datos):
+    def actualizar_persona(self, id_persona, nuevos_datos):
         try:
-            query = """
-            UPDATE personas
-            SET
-                primer_nombre = %s,
-                segundo_nombre = %s,
-                primer_apellido = %s,
-                segundo_apellido = %s,
-                documento = %s,
-                telefono = %s,
-                correo_electronico = %s,
-                direccion_residencia = %s,
-                fecha_nacimiento = %s,
-                genero = %s
-            WHERE id = %s
-            """
-            valores = (
+            self.cursor.execute("UPDATE personas SET primer_nombre = %s,  segundo_nombre = %s, primer_apellido = %s, segundo_apellido = %s, documento = %s, telefono = %s, correo_electronico = %s, direccion_residencia = %s,fecha_nacimiento = %s, genero = %s WHERE id = %s", (
                 nuevos_datos["primer_nombre"],
                 nuevos_datos["segundo_nombre"],
                 nuevos_datos["primer_apellido"],
@@ -70,8 +55,7 @@ class ClienteModel(connection.Conection):
                 nuevos_datos["fecha_nacimiento"],
                 nuevos_datos["genero"],
                 id_persona
-            )
-            self.cursor.execute(query, valores)
+            ))
             self.conn.commit()
             print(f"Persona con ID {id_persona} actualizada correctamente.")
         except Error as err:
@@ -87,3 +71,13 @@ class ClienteModel(connection.Conection):
         except Error as err:
             print(f"Error al eliminar persona: {err}")
             self.conn.rollback()
+
+    def validar_id_persona(self, id_persona):
+        try:
+            self.cursor.execute(
+                "SELECT id FROM personas WHERE id = %s", (id_persona,)
+            )
+            return self.cursor.fetchone() is not None
+        except Error as e:
+            print(f"Error al validar el ID: {e}")
+            return False
