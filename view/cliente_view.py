@@ -19,11 +19,11 @@ class ClienteView:
                 "segundo_nombre": utils.obtener_dato("Segundo nombre: "),
                 "primer_apellido": utils.obtener_dato("Primer apellido: "),
                 "segundo_apellido": utils.obtener_dato("Segundo apellido: "),
-                "documento": utils.obtener_dato("Documento: "),
+                "documento": utils.obtener_dato("Documento: ", utils.validar_documento),
                 "telefono": utils.obtener_dato("Teléfono: ", utils.validar_telefono),
                 "correo_electronico": utils.obtener_dato("Correo electrónico: ", utils.validar_correo),
                 "direccion_residencia": utils.obtener_dato("Dirección de residencia: "),
-                "fecha_nacimiento": utils.obtener_dato("Fecha de nacimiento (YYYY||MM||DD): ", utils.validar_fecha),
+                "fecha_nacimiento": utils.obtener_dato("Fecha de nacimiento (YYYY-MM-DD): ", utils.validar_fecha),
                 "genero": utils.obtener_dato("Género (Masculino/Femenino): ", utils.validar_genero),
             }
             return datos
@@ -103,4 +103,54 @@ class ClienteView:
                 print("No hay personas registradas.")
         except Exception as e:
             print(f"Error al mostrar la lista de personas: ERROR({e})")
+    
+    @staticmethod
+    def confirmacion_eliminacion():
+        """Solicita confirmación antes de eliminar, asegurando una respuesta válida."""
+        while True:
+            respuesta = input("¿Está seguro de que desea eliminar la persona? (SI/NO): ").strip().upper()
+            if respuesta in ["SI", "NO"]:
+                return respuesta
+            else:
+                print("Respuesta no válida. Por favor, ingrese 'SI' o 'NO'.")
+    
+    @staticmethod
+    def seleccionar_campo_actualizar():
+        """Muestra los campos disponibles para actualizar y permite seleccionar uno."""
+        print("\n--- Campos disponibles para actualizar ---")
+        opciones = {
+            "1": "primer_nombre",
+            "2": "segundo_nombre",
+            "3": "primer_apellido",
+            "4": "segundo_apellido",
+            "5": "documento",
+            "6": "telefono",
+            "7": "correo_electronico",
+            "8": "direccion_residencia",
+            "9": "fecha_nacimiento",
+            "10": "genero"
+        }
+        
+        for key, value in opciones.items():
+            print(f"{key}. {value.replace('_', ' ').capitalize()}")
+        
+        while True:
+            opcion = input("Seleccione el número del campo que desea actualizar: ").strip()
+            if opcion in opciones:
+                return opciones[opcion]
+            else:
+                print("Opción no válida. Intente de nuevo.")
+
+    @staticmethod
+    def obtener_nuevo_valor(campo):
+        validacion_func = None
+        if campo == "documento":
+            validacion_func = utils.validar_documento
+        if campo == "correo":
+            validacion_func = utils.validar_correo
+        if campo == "telefono":
+            validacion_func = utils.validar_telefono
+        return utils.obtener_dato(f"Ingrese el nuevo valor para {campo.replace('_', ' ').capitalize()}: ", validacion_func).strip()
+
+
             

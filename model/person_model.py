@@ -1,5 +1,6 @@
 from binascii import Error
 from model import connection
+from model import utils
 
 class PersonModel(connection.Conection):
     def __init__(self):
@@ -7,15 +8,19 @@ class PersonModel(connection.Conection):
     
     def agregar_persona(self, datos):
         try:
-            query = """
-            INSERT INTO personas (
-                primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
-                documento, telefono, correo_electronico, direccion_residencia,
-                fecha_nacimiento, genero
+            self.cursor.execute(""" INSERT INTO personas (
+                primer_nombre, 
+                segundo_nombre, 
+                primer_apellido, 
+                segundo_apellido,
+                documento, 
+                telefono, 
+                correo_electronico, 
+                direccion_residencia,
+                fecha_nacimiento, 
+                genero
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """
-            valores = (
-                datos["primer_nombre"],
+            """, datos["primer_nombre"],
                 datos["segundo_nombre"],
                 datos["primer_apellido"],
                 datos["segundo_apellido"],
@@ -24,14 +29,13 @@ class PersonModel(connection.Conection):
                 datos["correo_electronico"],
                 datos["direccion_residencia"],
                 datos["fecha_nacimiento"],
-                datos["genero"]
-            )
-            self.cursor.execute(query, valores)
+                datos["genero"])
             self.conn.commit()
             print("Cliente agregado satisfactoriamente.")
         except Error as err:
             print(f"Error al agregar persona: {err}")
-            self.conn.rollback()  # Revertir la transacción en caso de error
+            self.conn.rollback()
+
 
     def ver_personas(self):
         try:
@@ -41,26 +45,16 @@ class PersonModel(connection.Conection):
             print(f"Error al obtener personas: {err}")
             return None
 
-    def actualizar_persona(self, id_persona, nuevos_datos):
+    def actualizar_campo(self, id_persona, campo, nuevo_valor):
         try:
-            self.cursor.execute("UPDATE personas SET primer_nombre = %s,  segundo_nombre = %s, primer_apellido = %s, segundo_apellido = %s, documento = %s, telefono = %s, correo_electronico = %s, direccion_residencia = %s,fecha_nacimiento = %s, genero = %s WHERE id = %s", (
-                nuevos_datos["primer_nombre"],
-                nuevos_datos["segundo_nombre"],
-                nuevos_datos["primer_apellido"],
-                nuevos_datos["segundo_apellido"],
-                nuevos_datos["documento"],
-                nuevos_datos["telefono"],
-                nuevos_datos["correo_electronico"],
-                nuevos_datos["direccion_residencia"],
-                nuevos_datos["fecha_nacimiento"],
-                nuevos_datos["genero"],
-                id_persona
-            ))
+            query = f"UPDATE personas SET {campo} = %s WHERE id = %s"
+            self.cursor.execute(query, (nuevo_valor, id_persona))
             self.conn.commit()
-            print(f"Persona con ID {id_persona} actualizada correctamente.")
+            print(f"Campo '{campo}' actualizado correctamente para la persona con ID {id_persona}.")
         except Error as err:
-            print(f"Error al actualizar persona: {err}")
+            print(f"Error al actualizar el campo: {err}")
             self.conn.rollback()
+
             
     def eliminar_persona(self, id_persona):
         try:
@@ -81,3 +75,32 @@ class PersonModel(connection.Conection):
         except Error as e:
             print(f"Error al validar el ID: {e}")
             return False
+    
+    def documento_existe(self, documento):
+        try:
+            self.cursor.execute("SELECT COUNT(*) FROM personas WHERE documento = %s", (documento,))
+            resultado = self.cursor.fetchone()
+            return resultado[0] > 0  # Retorna True si ya existe
+        except Error as err:
+            print(f"Error al verificar documento: {err}")
+            return True  # Evita la inserción si hay error
+
+    def telefono_existe(self, telefono):
+        """Verifica si el teléfono ya está registrado en la base de datos."""
+        try:
+            self.cursor.execute("SELECT COUNT(*) FROM personas WHERE telefono = %s", (telefono,))
+            resultado = self.cursor.fetchone()
+            return resultado[0] > 0
+        except Error as err:
+            print(f"Error al verificar teléfono: {err}")
+            return True
+
+    def correo_existe(self, correo):
+        """Verifica si el correo ya está registrado en la base de datos."""
+        try:
+            self.cursor.execute("SELECT COUNT(*) FROM personas WHERE correo_electronico = %s", (correo,))
+            resultado = self.cursor.fetchone()
+            return resultado[0] > 0
+        except Error as err:
+            print(f"Error al verificar correo: {err}")
+            return True

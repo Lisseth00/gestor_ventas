@@ -13,8 +13,6 @@ class Conection:
             )
             if not self.conn.is_connected():
                 raise Error("No se pudo establecer la conexión.")
-            if self.conn.is_connected():
-                print("Si hay conexion")
             self.cursor = self.conn.cursor()
             self.commit = self.conn.commit()
         except Error as e:
