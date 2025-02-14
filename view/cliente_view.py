@@ -86,3 +86,4 @@ class ClienteView:
                 print("No hay personas registradas.")
         except Exception as e:
             print(f"Error al mostrar la lista de personas: ERROR({e})")
+            
