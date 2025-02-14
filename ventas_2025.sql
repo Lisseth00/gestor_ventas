@@ -96,7 +96,7 @@ ALTER TABLE `personas`
 -- Filtros para la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  ADD CONSTRAINT `FK1_personas` FOREIGN KEY (`id`) REFERENCES `personas` (`id`);
+  ADD CONSTRAINT `FK1_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

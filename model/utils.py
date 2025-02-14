@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 from model.person_model import PersonModel
+from model.client_model import ClientModel
                     
 
 def validar_telefono(telefono):
@@ -35,6 +36,11 @@ def validar_documento(documento):
     persona_model = PersonModel()
     if persona_model.documento_existe(documento):
         raise ValueError("Error: Ya existe una persona con ese documento.")
+
+def validar_id_persona(id_persona):
+    cliente_model = ClientModel()
+    if not cliente_model.validar_id_persona(id_persona):
+        raise ValueError("El ID de persona no es válido o no existe.")
 
 def obtener_dato(mensaje, validacion_func=None):
     while True:

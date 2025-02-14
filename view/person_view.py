@@ -1,6 +1,6 @@
 from model import utils
 
-class ClienteView:
+class PersonView:
     @staticmethod
     def mostrar_menu():
         """Muestra el menú de opciones."""
