@@ -4,7 +4,7 @@ class ClienteView:
     @staticmethod
     def mostrar_menu():
         """Muestra el menú de opciones."""
-        print("\n--- Menú de Gestión de Personas ---")
+        print("\n---- Menú de Gestión de Personas ----")
         print("1. Agregar persona")
         print("2. Ver personas")
         print("3. Actualizar persona")
@@ -23,7 +23,7 @@ class ClienteView:
                 "telefono": utils.obtener_dato("Teléfono: ", utils.validar_telefono),
                 "correo_electronico": utils.obtener_dato("Correo electrónico: ", utils.validar_correo),
                 "direccion_residencia": utils.obtener_dato("Dirección de residencia: "),
-                "fecha_nacimiento": utils.obtener_dato("Fecha de nacimiento (YYYY-MM-DD): ", utils.validar_fecha),
+                "fecha_nacimiento": utils.obtener_dato("Fecha de nacimiento (YYYY||MM||DD): ", utils.validar_fecha),
                 "genero": utils.obtener_dato("Género (Masculino/Femenino): ", utils.validar_genero),
             }
             return datos
@@ -74,14 +74,31 @@ class ClienteView:
             return None
 
     @staticmethod
+    
     def mostrar_personas(personas):
         try:
             if personas:
                 print("-" * 120)
                 for persona in personas:
                     print(
-                        f"{persona[0]}\t{persona[1]}\t{persona[2]}\t{persona[3]}\t{persona[4]}\t{persona[5]}\t{persona[6]}\t{persona[7]}\t{persona[8]}\t{persona[9]}\t{persona[10]}"
+                        f"{persona[0]}||{persona[1]}||{persona[2]}||{persona[3]}||{persona[4]}||{persona[5]}||{persona[6]}||{persona[7]}||{persona[8]}||{persona[9]}||{persona[10]}"
                     )
+                    print("-" * 120)
+            else:
+                print("No hay personas registradas.")
+        except Exception as e:
+            print(f"Error al mostrar la lista de personas: ERROR({e})")
+    
+    @staticmethod
+    def mostrar_personas_id(personas):
+        try:
+            if personas:
+                print("-" * 90)
+                for persona in personas:
+                    print(
+                        f"ID: {persona[0]}|| NOMBRE:{persona[1]}|| APELLIDO: {persona[3]}|| Nº DOCUMENTO: {persona[5]}|| TELEFONO: {persona[6]}"
+                    )
+                    print("-" * 90)
             else:
                 print("No hay personas registradas.")
         except Exception as e:

@@ -17,7 +17,6 @@ def validar_fecha(fecha):
 
 def validar_genero(genero):
     cambio_formato_genero = genero.strip().upper().replace(" ", "")
-    print(cambio_formato_genero)
     if cambio_formato_genero not in ["MASCULINO", "FEMENINO"]:
         raise ValueError("El género no es válido.")
 
@@ -33,3 +32,4 @@ def obtener_dato(mensaje, validacion_func=None):
                 print(e)
         else:
             print("Este campo no puede estar vacío.")
+
