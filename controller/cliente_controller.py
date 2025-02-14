@@ -23,13 +23,15 @@ class ControladorPersona:
                 if personas:
                     self.view.mostrar_mensaje("\n--- Lista de Personas ---")
                     self.view.mostrar_personas_id(personas)
-                    self.view.mostrar_mensaje("\n--- Actualizar Persona ---")
-                    id_persona = self.view.obtener_id_persona("actualizar")
-                    if self.modelo.validar_id_persona(id_persona):
-                        nuevos_datos = self.view.obtener_datos_persona()
-                        self.modelo.actualizar_persona(id_persona, nuevos_datos)
-                    else:
-                        self.view.mostrar_mensaje("ID no válido. Intente de nuevo.")
+                    while True:
+                        self.view.mostrar_mensaje("\n--- Actualizar Persona ---")
+                        id_persona = self.view.obtener_id_persona("actualizar")
+                        if self.modelo.validar_id_persona(id_persona):
+                            nuevos_datos = self.view.obtener_datos_persona()
+                            self.modelo.actualizar_persona(id_persona, nuevos_datos)
+                            break
+                        else:
+                            self.view.mostrar_mensaje("ID no válido. Intente de nuevo.")
                 else:
                     self.view.mostrar_mensaje("No hay personas registradas.")
             elif opcion == "4":
@@ -37,12 +39,14 @@ class ControladorPersona:
                 if personas:
                     self.view.mostrar_mensaje("\n--- Lista de Personas ---")
                     self.view.mostrar_personas_id(personas)
-                    self.view.mostrar_mensaje("\n--- Eliminar Persona ---")
-                    id_persona = self.view.obtener_id_persona("eliminar")
-                    if self.modelo.validar_id_persona(id_persona):
-                        self.modelo.eliminar_persona(id_persona)
-                    else:
-                        self.view.mostrar_mensaje("ID no válido. Intente de nuevo.")
+                    while True:
+                        self.view.mostrar_mensaje("\n--- Eliminar Persona ---")
+                        id_persona = self.view.obtener_id_persona("eliminar")
+                        if self.modelo.validar_id_persona(id_persona):
+                            self.modelo.eliminar_persona(id_persona)
+                            break
+                        else:
+                            self.view.mostrar_mensaje("ID no válido. Intente de nuevo.")
                 else:
                     self.view.mostrar_mensaje("No hay personas registradas.")
                 
