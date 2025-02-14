@@ -1,5 +1,18 @@
-from model import cliente_model
+from model import person_model
 
-cliente1 = cliente_model.ClienteModel()
+nuevos_datos = {
+    "primer_nombre": "Ana",
+    "segundo_nombre": "María",
+    "primer_apellido": "Pérez",
+    "segundo_apellido": "García",
+    "documento": "9876543210",
+    "telefono": "+57 310 987 6543",
+    "correo_electronico": "ana.perez@example.com",
+    "direccion_residencia": "Carrera 89 # 12-34, Medellín, Colombia",
+    "fecha_nacimiento": "1995-05-20",  # Formato YYYY-MM-DD para MySQL
+    "genero": "Femenino"
+}
 
-cliente1.agregando_persona("jeferson","", "Alvarez", "", "1120558047", "3218726693", "mymo@gmail.com", "Calle 123 # 45-67, Bogotá, Colombia", "15/08/1990", "FEMENINO")
+cliente1 = person_model.ClienteModel()
+id_persona =  4
+personas = cliente1.eliminar_persona(id_persona)
