@@ -16,9 +16,9 @@ class PersonView:
         try:
             datos = {
                 "primer_nombre": utils.obtener_dato("Primer nombre: "),
-                "segundo_nombre": utils.obtener_dato("Segundo nombre: "),
+                "segundo_nombre": input("Segundo nombre: "),
                 "primer_apellido": utils.obtener_dato("Primer apellido: "),
-                "segundo_apellido": utils.obtener_dato("Segundo apellido: "),
+                "segundo_apellido": input("Segundo apellido: "),
                 "documento": utils.obtener_dato("Documento: ", utils.validar_documento),
                 "telefono": utils.obtener_dato("Teléfono: ", utils.validar_telefono),
                 "correo_electronico": utils.obtener_dato("Correo electrónico: ", utils.validar_correo),
