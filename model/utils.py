@@ -3,6 +3,9 @@ from datetime import datetime
 from model.person_model import PersonModel
 from model.client_model import ClientModel
                     
+def validar_digitos_numericos(dato_ingresado):
+    if not dato_ingresado.isdigit():
+        return True
 
 def validar_telefono(telefono):
     persona_model = PersonModel()
@@ -30,9 +33,10 @@ def validar_genero(genero):
     cambio_formato_genero = genero.strip().upper().replace(" ", "")
     if cambio_formato_genero not in ["MASCULINO", "FEMENINO"]:
         raise ValueError("El género no es válido.")
-    
 
 def validar_documento(documento):
+    if validar_digitos_numericos(documento):
+        raise ValueError("Error: El documento solo puede contener números.")
     persona_model = PersonModel()
     if persona_model.documento_existe(documento):
         raise ValueError("Error: Ya existe una persona con ese documento.")
