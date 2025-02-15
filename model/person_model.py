@@ -20,7 +20,7 @@ class PersonModel(connection.Conection):
                 fecha_nacimiento, 
                 genero
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, datos["primer_nombre"],
+            """, (datos["primer_nombre"],
                 datos["segundo_nombre"],
                 datos["primer_apellido"],
                 datos["segundo_apellido"],
@@ -29,7 +29,7 @@ class PersonModel(connection.Conection):
                 datos["correo_electronico"],
                 datos["direccion_residencia"],
                 datos["fecha_nacimiento"],
-                datos["genero"])
+                datos["genero"]))
             self.conn.commit()
             print("Cliente agregado satisfactoriamente.")
         except Error as err:
