@@ -1,0 +1,65 @@
+# Ignorar entornos virtuales
+venv/
+.env/
+env/
+ENV/
+virtualenv/
+
+# Ignorar archivos de configuración de entornos virtuales
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Ignorar archivos de configuración de Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Ignorar archivos de configuración de IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignorar archivos de caché y logs
+.pytest_cache/
+.cache/
+.coverage
+htmlcov/
+*.log
+*.sqlite3
+
+# Ignorar archivos de Jupyter Notebook
+.ipynb_checkpoints/
+
+# Ignorar archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de configuración local
+settings/local.py
+settings/dev.py
+
+# Ignorar archivos de base de datos local
+*.db
+*.sqlite3
