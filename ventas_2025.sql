@@ -1,11 +1,11 @@
-xam-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 14-02-2025 a las 02:08:45
--- Versión del servidor: 8.0.30
--- Versión de PHP: 8.1.10
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 15-02-2025 a las 21:49:35
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `clientes` (
-  `id` int NOT NULL,
-  `id_persona` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int(11) NOT NULL,
+  `id_persona` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -39,18 +39,25 @@ CREATE TABLE `clientes` (
 --
 
 CREATE TABLE `personas` (
-  `id` int NOT NULL,
-  `primer_nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `segundo_nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `primer_apellido` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `segundo_apellido` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `documento` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `telefono` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `correo_electronico` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `direccion_residencia` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `id` int(11) NOT NULL,
+  `primer_nombre` varchar(50) NOT NULL,
+  `segundo_nombre` varchar(50) DEFAULT NULL,
+  `primer_apellido` varchar(50) NOT NULL,
+  `segundo_apellido` varchar(50) DEFAULT NULL,
+  `documento` varchar(10) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
+  `correo_electronico` varchar(50) NOT NULL,
+  `direccion_residencia` text NOT NULL,
   `fecha_nacimiento` date NOT NULL,
-  `genero` enum('FEMENINO','MASCULINO') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `genero` enum('FEMENINO','MASCULINO') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `personas`
+--
+
+INSERT INTO `personas` (`id`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `documento`, `telefono`, `correo_electronico`, `direccion_residencia`, `fecha_nacimiento`, `genero`) VALUES
+(6, 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', '0000-00-00', '');
 
 --
 -- Índices para tablas volcadas
@@ -61,6 +68,7 @@ CREATE TABLE `personas` (
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `id_persona` (`id_persona`),
   ADD KEY `FK_personas_personas` (`id_persona`) USING BTREE;
 
 --
@@ -80,13 +88,13 @@ ALTER TABLE `personas`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
@@ -96,7 +104,7 @@ ALTER TABLE `personas`
 -- Filtros para la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  ADD CONSTRAINT `FK1_personas` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id`);
+  ADD CONSTRAINT `clientes_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `personas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
