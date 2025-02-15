@@ -64,3 +64,11 @@ class ClientModel(connection.Conection):
         except Error as e:
             print(f"Error al validar el ID de persona: {e}")
             return False
+    
+    def validar_cliente_existe(self, id_cliente):
+        try:
+            self.cursor.execute("SELECT COUNT(*) FROM clientes WHERE id_persona = %s", (id_cliente,))
+            resultado = self.cursor.fetchone()
+            return resultado[0] > 0
+        except Error as e:
+            print(f"Error al validar el ID del cliente")

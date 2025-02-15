@@ -13,7 +13,7 @@ def validar_telefono(telefono):
         raise ValueError("El teléfono debe comenzar con un signo '+' seguido de números.")
     else:
         if persona_model.telefono_existe(telefono):
-            raise ValueError("Error: Ya existe una persona con ese teléfono.")
+            raise ValueError("Ya existe una persona con ese teléfono.")
 
 def validar_correo(correo):
     persona_model = PersonModel()
@@ -21,7 +21,7 @@ def validar_correo(correo):
         raise ValueError("El correo electrónico no es válido.")
     else:
         if persona_model.correo_existe(correo):
-            raise ValueError("Error: Ya existe una persona con ese correo electrónico.")
+            raise ValueError("Ya existe una persona con ese correo electrónico.")
 
 def validar_fecha(fecha):
     try:
@@ -36,15 +36,17 @@ def validar_genero(genero):
 
 def validar_documento(documento):
     if validar_digitos_numericos(documento):
-        raise ValueError("Error: El documento solo puede contener números.")
+        raise ValueError("El documento solo puede contener números.")
     persona_model = PersonModel()
     if persona_model.documento_existe(documento):
-        raise ValueError("Error: Ya existe una persona con ese documento.")
+        raise ValueError("Ya existe una persona con ese documento.")
 
 def validar_id_persona(id_persona):
     cliente_model = ClientModel()
     if not cliente_model.validar_id_persona(id_persona):
         raise ValueError("El ID de persona no es válido o no existe.")
+    if cliente_model.validar_cliente_existe(id_persona):
+        raise ValueError("El ID del cliente ya existe")
 
 def obtener_dato(mensaje, validacion_func=None):
     while True:
